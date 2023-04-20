@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1679451322 source:d:\c++\bhw\ltexture.cpp
+	"LTexture.h"
+
+1679453123 d:\c++\bhw\ltexture.h
+	"Project_Base.h"
+
+1679453721 d:\c++\bhw\project_base.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+
+1679451322 source:d:\c++\bhw\bullet.cpp
+	"Bullet.h"
+
+1679453124 d:\c++\bhw\bullet.h
+	"Project_Base.h"
+	"LTexture.h"
+	"GlobalVariables.h"
+
+1679453721 d:\c++\bhw\globalvariables.h
+	"LTexture.h"
+	"Project_Base.h"
+
+1679453626 d:\c++\bhw\ship.h
+	"Project_Base.h"
+	"LTexture.h"
+	"GlobalVariables.h"
+	"Bullet.h"
+	"Meteorite.h"
+
+1679453123 d:\c++\bhw\meteorite.h
+	"Project_Base.h"
+	"LTexture.h"
+	"GlobalVariables.h"
+
+1679451479 source:d:\c++\bhw\main.cpp
+	"Project_Base.h"
+	"CommonFunction.h"
+	"SDL_Utils.h"
+
+1679453123 d:\c++\bhw\commonfunction.h
+	"Project_Base.h"
+	"LTexture.h"
+	"GlobalVariables.h"
+	"SDL_Utils.h"
+
+1679453626 d:\c++\bhw\sdl_utils.h
+	"Project_Base.h"
+	"LTexture.h"
+	"Ship.h"
+
+1679451694 source:d:\c++\bhw\commonfunction.cpp
+	"CommonFunction.h"
+
+1679452070 source:d:\c++\bhw\meteorite.cpp
+	"Meteorite.h"
+
+1679424531 source:d:\c++\bhw\sdl_utils.cpp
+	"SDL_Utils.h"
+
+1679452070 source:d:\c++\bhw\ship.cpp
+	"Ship.h"
+
