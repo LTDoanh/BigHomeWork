@@ -43,6 +43,8 @@ bool running = true;
 bool isMenu = true;
 bool isGuide = false;
 bool isReset = true;
+bool isMute = false;
+bool isPause = false;
 
 class LTexture
 {
@@ -71,13 +73,17 @@ private:
 	int height;
 };
 
-LTexture backgroundTexture; // Hình nền
+LTexture backgroundTexture;
+LTexture titleTexture;
 LTexture playTexture;
 LTexture guideTexture;
 LTexture guide2Texture;
 LTexture quitTexture;
-LTexture homeTexture;
 LTexture onMusicTexture;
+LTexture offMusicTexture;
+LTexture homeTexture;
+LTexture pauseTexture;
+LTexture continueTexture;
 LTexture levelTexture;
 LTexture timeLeftTexture;
 LTexture scoreTexture;
@@ -133,7 +139,13 @@ bool init()
         return false;
     }
 
-    // Tải nút play
+    // Tải background title
+    if (!titleTexture.loadFromFile("title.png")) {
+        cout << "Failed to load title texture!" << endl;
+        return false;
+    }
+
+    // Tải nút chơi
     if (!playTexture.loadFromFile("play.png")) {
         cout << "Failed to load play texture!" << endl;
         return false;
@@ -145,13 +157,13 @@ bool init()
         return false;
     }
 
-    // Tải nút quit
+    // Tải nút thoát
     if (!quitTexture.loadFromFile("quit.png")) {
         cout << "Failed to load quit texture!" << endl;
         return false;
     }
 
-    // Tải nút replay
+    // Tải nút chơi lại
     if (!replayTexture.loadFromFile("replay.png")) {
         cout << "Failed to load replay texture!" << endl;
         return false;
@@ -163,9 +175,23 @@ bool init()
         return false;
     }
 
-    // Tải nút on music
+    // Tải nút tạm dừng/tiếp tục
+    if (!pauseTexture.loadFromFile("pause.png")) {
+        cout << "Failed to load on pause texture!" << endl;
+        return false;
+    }
+    if (!continueTexture.loadFromFile("continue.png")) {
+        cout << "Failed to load off continue texture!" << endl;
+        return false;
+    }
+
+    // Tải nút bật/tắt âm thanh
     if (!onMusicTexture.loadFromFile("onMusic.png")) {
         cout << "Failed to load on music texture!" << endl;
+        return false;
+    }
+    if (!offMusicTexture.loadFromFile("offMusic.png")) {
+        cout << "Failed to load off music texture!" << endl;
         return false;
     }
 
@@ -213,12 +239,16 @@ void close()
 {
     // Giải phóng texture
     backgroundTexture.free();
+    titleTexture.free();
     playTexture.free();
     guideTexture.free();
     guide2Texture.free();
     quitTexture.free();
     homeTexture.free();
+    pauseTexture.free();
+    continueTexture.free();
     onMusicTexture.free();
+    offMusicTexture.free();
     levelTexture.free();
     timeLeftTexture.free();
     scoreTexture.free();
@@ -257,8 +287,16 @@ void renderMenu()
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
-    //Vẽ background
-    backgroundTexture.render(0, 0);
+    //Vẽ title
+    titleTexture.render(0, 0);
+
+    // Vẽ nút bật/tắt âm thanh lên màn hình
+    if (isMute) {
+        offMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
+    else {
+        onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
 
     // Vẽ các phím
     playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth()/2, WINDOW_HEIGHT/2 - 50 - playTexture.getHeight() - guideTexture.getHeight()/2);
@@ -275,13 +313,22 @@ void renderGuide()
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
-    // Tải ảnh hướng dẫn
+    // Tải và vẽ ảnh hướng dẫn lên màn hình
     if (!guide2Texture.loadFromFile("guide2.png")) {
         cout << "Failed to load guide texture!" << endl;
         return;
     }
     guide2Texture.render(0, 0);
 
+    // Vẽ nút bật/tắt âm thanh lên màn hình
+    if (isMute) {
+        offMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
+    else {
+        onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
+
+    // Vẽ nút play và nút quit lên màn hình
     playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth() - 50, 520);
     quitTexture.render(WINDOW_WIDTH/2 + 50, 520);
 
@@ -323,10 +370,25 @@ void renderGame()
 //        SDL_RenderFillRect(renderer, &buttons[clickedIndex]);
 //    }
 
-    // Vẽ nút home lên màn hình
-    homeTexture.render(WINDOW_WIDTH - homeTexture.getWidth() - 10, 10);
+    // Vẽ nút bật/tắt âm thanh lên màn hình
+    if (isMute) {
+        offMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
+    else {
+        onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
+    }
 
-    onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, homeTexture.getHeight() + 20);
+    // Vẽ nút home lên màn hình
+    homeTexture.render(WINDOW_WIDTH - homeTexture.getWidth() - 10, homeTexture.getHeight() + 20);
+
+    // Vẽ nút tạm ngừng/tiếp tục
+    if (isPause) {
+        continueTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
+    }
+    else {
+        pauseTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
+    }
+
 
     string levelText = "Level:" + to_string(level);
     // Tải và vẽ level lên màn hình
@@ -395,16 +457,27 @@ void handleEvents()
             // Đặt biến kết thúc trò chơi là true
             running = false;
         }
-        if (isMenu) {
-            // Nếu nhấn chuột trái thì kiểm tra nút được nhấn
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+        // Nếu nhấn chuột trái thì kiểm tra nút được nhấn
+        if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
                 // Lấy tọa độ của chuột
                 int x = e.button.x;
                 int y = e.button.y;
 
                 int xGuide = WINDOW_WIDTH/2 - guideTexture.getWidth()/2;
                 int yGuide = WINDOW_HEIGHT/2 - guideTexture.getHeight()/2;
-
+            // Kiểm tra xem chuột có nhấn vào nút bật/tắt âm thanh không
+            if (x >= WINDOW_WIDTH - onMusicTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 10 && y <= 10 + onMusicTexture.getHeight()) {
+                if(isMute) {
+                    Mix_ResumeMusic();
+                    Mix_Volume(-1, 64);
+                }
+                else {
+                    Mix_PauseMusic();
+                    Mix_Volume(-1, 0);
+                }
+                isMute = !isMute;
+            }
+            if (isMenu) {
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= xGuide && x <= xGuide + playTexture.getWidth() && y >= yGuide - 50 - playTexture.getHeight() && y <= yGuide - 50) {
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
@@ -422,14 +495,7 @@ void handleEvents()
                     running = false;
                 }
             }
-        }
-        else if (isGuide) {
-            // Nếu nhấn chuột trái thì kiểm tra nút được nhấn
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-                // Lấy tọa độ của chuột
-                int x = e.button.x;
-                int y = e.button.y;
-
+            else if (isGuide) {
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= WINDOW_WIDTH/2 - 50 - playTexture.getWidth() && x <= WINDOW_WIDTH/2 - 50 && y >= 520 && y <= 520 + playTexture.getHeight()) {
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
@@ -442,14 +508,7 @@ void handleEvents()
                     running = false;
                 }
             }
-        }
-        else if (gameOver) {
-            // Nếu nhấn chuột trái thì kiểm tra nút được nhấn
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-                // Lấy tọa độ của chuột
-                int x = e.button.x;
-                int y = e.button.y;
-
+            else if (gameOver) {
                 int xReplay = WINDOW_WIDTH/2 - replayTexture.getWidth()/2;
                 int yReplay = WINDOW_HEIGHT/2 - replayTexture.getHeight()/2;
                 // Nếu nhấn nút replay thì chạy lại game
@@ -464,22 +523,17 @@ void handleEvents()
                     running = false;
                 }
             }
-        }
-        else {
-            // Nếu nhấn chuột trái thì kiểm tra nút được nhấn
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-                // Nếu đang hiển thị chuỗi thì bỏ qua
-                if (showSequence) {
-                    return;
-                }
-                // Lấy tọa độ của chuột
-                int x = e.button.x;
-                int y = e.button.y;
-
+            else {
                 // Kiểm tra xem chuột có nhấn vào nút home không
-                if (x >= WINDOW_WIDTH - homeTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 10 && y <= 10 + homeTexture.getHeight()) {
+                if (x >= WINDOW_WIDTH - homeTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeTexture.getHeight() && y <= 20 + 2*homeTexture.getHeight()) {
                     isMenu = true;
                 }
+
+                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục khong
+                if (x >= WINDOW_WIDTH - pauseTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 30 + 2*pauseTexture.getHeight() && y <= 30 + 3*pauseTexture.getHeight()) {
+                    isPause= !isPause;
+                }
+
                 // Kiểm tra xem chuột có nhấn vào một nút nào không
                 for (int i = 0; i < BUTTON_NUM; i++) {
                     if (x >= buttons[i].x && x <= buttons[i].x + buttons[i].w && y >= buttons[i].y && y <= buttons[i].y + buttons[i].h) {
