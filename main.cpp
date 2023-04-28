@@ -44,7 +44,7 @@ bool isMenu = true;
 bool isGuide = false;
 bool isReset = true;
 bool isMute = false;
-bool isPause = false;
+//bool isPause = false;
 
 class LTexture
 {
@@ -82,8 +82,8 @@ LTexture quitTexture;
 LTexture onMusicTexture;
 LTexture offMusicTexture;
 LTexture homeTexture;
-LTexture pauseTexture;
-LTexture continueTexture;
+//LTexture pauseTexture;
+//LTexture continueTexture;
 LTexture levelTexture;
 LTexture timeLeftTexture;
 LTexture scoreTexture;
@@ -175,15 +175,15 @@ bool init()
         return false;
     }
 
-    // Tải nút tạm dừng/tiếp tục
-    if (!pauseTexture.loadFromFile("pause.png")) {
-        cout << "Failed to load on pause texture!" << endl;
-        return false;
-    }
-    if (!continueTexture.loadFromFile("continue.png")) {
-        cout << "Failed to load off continue texture!" << endl;
-        return false;
-    }
+//    // Tải nút tạm dừng/tiếp tục
+//    if (!pauseTexture.loadFromFile("pause.png")) {
+//        cout << "Failed to load on pause texture!" << endl;
+//        return false;
+//    }
+//    if (!continueTexture.loadFromFile("continue.png")) {
+//        cout << "Failed to load off continue texture!" << endl;
+//        return false;
+//    }
 
     // Tải nút bật/tắt âm thanh
     if (!onMusicTexture.loadFromFile("onMusic.png")) {
@@ -245,8 +245,8 @@ void close()
     guide2Texture.free();
     quitTexture.free();
     homeTexture.free();
-    pauseTexture.free();
-    continueTexture.free();
+//    pauseTexture.free();
+//    continueTexture.free();
     onMusicTexture.free();
     offMusicTexture.free();
     levelTexture.free();
@@ -381,14 +381,13 @@ void renderGame()
     // Vẽ nút home lên màn hình
     homeTexture.render(WINDOW_WIDTH - homeTexture.getWidth() - 10, homeTexture.getHeight() + 20);
 
-    // Vẽ nút tạm ngừng/tiếp tục
-    if (isPause) {
-        continueTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
-    }
-    else {
-        pauseTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
-    }
-
+//    // Vẽ nút tạm ngừng/tiếp tục
+//    if (isPause) {
+//        continueTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
+//    }
+//    else {
+//        pauseTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
+//    }
 
     string levelText = "Level:" + to_string(level);
     // Tải và vẽ level lên màn hình
@@ -423,8 +422,8 @@ void renderGameOver()
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
-    //Vẽ lại background
-    backgroundTexture.render(0, 0);
+    //Vẽ background có title
+    titleTexture.render(0, 0);
 
     string endText = "YOUR SCORE: " + to_string(score);
     //Tải và hiển thị điểm lên màn hình;
@@ -529,10 +528,10 @@ void handleEvents()
                     isMenu = true;
                 }
 
-                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục khong
-                if (x >= WINDOW_WIDTH - pauseTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 30 + 2*pauseTexture.getHeight() && y <= 30 + 3*pauseTexture.getHeight()) {
-                    isPause= !isPause;
-                }
+//                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục khong
+//                if (x >= WINDOW_WIDTH - pauseTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 30 + 2*pauseTexture.getHeight() && y <= 30 + 3*pauseTexture.getHeight()) {
+//                    isPause= !isPause;
+//                }
 
                 // Kiểm tra xem chuột có nhấn vào một nút nào không
                 for (int i = 0; i < BUTTON_NUM; i++) {
@@ -555,7 +554,12 @@ void handleEvents()
                                 startTime = SDL_GetTicks();
                                 // Đặt chỉ số về 0
                                 index = 0;
-                                sequence.push_back(rand() % BUTTON_NUM);
+                                // Tạo ngẫu nhiên thêm 1 ô phát sáng
+                                int temp = rand() % BUTTON_NUM;
+                                while (temp == sequence.back()) {
+                                    temp = rand() % BUTTON_NUM;
+                                }
+                                sequence.push_back(temp);
                             }
                         }
                         // Nếu nút nhấn sai

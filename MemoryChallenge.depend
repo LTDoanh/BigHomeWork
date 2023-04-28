@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1682643969 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	<iostream>
+	<vector>
+	<cstdlib>
+	<ctime>
+
