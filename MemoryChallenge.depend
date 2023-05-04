@@ -1,5 +1,16 @@
 # depslib dependency file v1.0
-1682643969 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\main.cpp
+1683197427 source:d:\c++\projectbhw\main.cpp
+	"Game.h"
+
+1683196528 source:d:\c++\projectbhw\game.cpp
+	"Game.h"
+
+1683196899 d:\c++\projectbhw\game.h
+	"Global.h"
+	"Constants.h"
+	"LTexture.h"
+
+1683196899 d:\c++\projectbhw\global.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -8,4 +19,22 @@
 	<vector>
 	<cstdlib>
 	<ctime>
+	"Constants.h"
+	"LTexture.h"
+
+1683196528 d:\c++\projectbhw\constants.h
+	<SDL.h>
+
+1683196660 d:\c++\projectbhw\ltexture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"Global.h"
+	<iostream>
+
+1683196528 source:d:\c++\projectbhw\global.cpp
+	"Global.h"
+
+1683196528 source:d:\c++\projectbhw\ltexture.cpp
+	"LTexture.h"
 
