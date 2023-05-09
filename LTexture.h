@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include "Global.h"
 #include <iostream>
+
 using namespace std;
 
 class LTexture

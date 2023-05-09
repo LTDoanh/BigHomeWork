@@ -4,8 +4,12 @@ int main(int argc, char* argv[])
 {
     // Khởi tạo SDL và các thành phần liên quan
     if (!init()) {
-        cout << "Không thể khởi tạo SDL." << endl;
+        cout << "Failed to initialize SDL!" << endl;
         return -1;
+    }
+    else if(!loadMedia()) {
+            cout << "Failed to load media!" << endl;
+            return -1;
     }
     // Chạy trò chơi
     run();

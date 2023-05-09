@@ -11,14 +11,14 @@
 #include <ctime>
 #include "Constants.h"
 #include "LTexture.h"
-
-using namespace std;
+#include "Player.h"
+#include "HScores.h"
 
 // Khai báo các biến toàn cục
 extern SDL_Window* window; // Cửa sổ chính
 extern SDL_Renderer* renderer; // Bộ vẽ
 extern SDL_Rect buttons[BUTTON_NUM]; // Mảng các nút
-extern vector<int> sequence; // Chuỗi các nút cần nhấn
+extern std::vector<int> sequence; // Chuỗi các nút cần nhấn
 extern int level; // Cấp độ hiện tại
 extern int index; // Chỉ số của nút cần nhấn tiếp theo
 extern bool showSequence; // Biến kiểm tra có đang hiển thị chuỗi hay không
@@ -32,11 +32,19 @@ extern bool running;
 extern bool isMenu;
 extern bool isGuide;
 extern bool isSetting;
+extern bool isEasy;
+extern bool isDefault;
+extern bool isNormal;
+extern bool isHard;
+extern bool isRanking;
 extern bool isReset;
 extern bool isMute;
 extern bool isPause;
+extern bool isHighScore;
+extern bool readHS;
+extern string nameOfPlayer;
 
-
+extern std::vector<Player> HighScores;
 
 extern TTF_Font* font; // Font chữ
 extern Mix_Music* music; // Nhạc nền của game

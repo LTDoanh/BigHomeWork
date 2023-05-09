@@ -37,8 +37,11 @@
 		<Unit filename="Game.h" />
 		<Unit filename="Global.cpp" />
 		<Unit filename="Global.h" />
+		<Unit filename="HScores.cpp" />
+		<Unit filename="HScores.h" />
 		<Unit filename="LTexture.cpp" />
 		<Unit filename="LTexture.h" />
+		<Unit filename="Player.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

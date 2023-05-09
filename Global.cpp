@@ -4,7 +4,7 @@
 SDL_Window* window = nullptr; // Cửa sổ chính
 SDL_Renderer* renderer = nullptr; // Bộ vẽ
 SDL_Rect buttons[BUTTON_NUM]; // Mảng các nút
-vector<int> sequence; // Chuỗi các nút cần nhấn
+std::vector<int> sequence; // Chuỗi các nút cần nhấn
 int level = 1; // Cấp độ hiện tại
 int index = 0; // Chỉ số của nút cần nhấn tiếp theo
 bool showSequence = true; // Biến kiểm tra có đang hiển thị chuỗi hay không
@@ -18,9 +18,20 @@ bool running = true;
 bool isMenu = true;
 bool isGuide = false;
 bool isSetting = false;
+bool isEasy = false;
+bool isDefault = true;
+bool isNormal = false;
+bool isHard = false;
+bool isRanking = false;
 bool isReset = true;
 bool isMute = false;
 bool isPause = false;
+bool isHighScore = false;
+bool readHS = false;
+string nameOfPlayer = "";
+
+HScores hscores;
+std::vector<Player> HighScores;
 
 LTexture backgroundTexture;
 LTexture titleTexture;
@@ -34,13 +45,30 @@ LTexture homeTexture;
 LTexture homeIconTexture;
 LTexture settingTexture;
 LTexture setting2Texture;
+LTexture modeTexture;
+LTexture easyModeTexture;
+LTexture defaultModeTexture;
+LTexture normalModeTexture;
+LTexture hardModeTexture;
+LTexture volumeTexture;
+LTexture volumeNumberTexture;
+LTexture volumeUpTexture;
+LTexture volumeDownTexture;
+LTexture rankingTexture;
+LTexture ranking2Texture;
+LTexture playerTexture;
+LTexture highScoreTexture;
 LTexture pauseTexture;
 LTexture continueTexture;
 LTexture levelTexture;
 LTexture timeLeftTexture;
 LTexture scoreTexture;
 LTexture endTexture;
+LTexture enterNameTexture;
+LTexture nameTexture;
 LTexture replayTexture;
+LTexture onButtonTexture;
+LTexture offButtonTexture;
 
 TTF_Font* font = nullptr; // Font chữ
 Mix_Music* music = nullptr; // Nhạc nền của game
