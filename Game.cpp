@@ -134,7 +134,7 @@ bool loadMedia()
         return false;
     }
 
-    // Tải âm lượng
+    // Tải âm lượng và nút tăng/giảm âm lượng
     if (!volumeTexture.loadFromRenderedText("VOLUME:", TEXT_COLOR, font)) {
         cout << "Failed to load volume texture!" << endl;
         return false;
@@ -159,16 +159,6 @@ bool loadMedia()
         return false;
     }
 
-    // Tải nút tạm dừng/tiếp tục
-    if (!pauseTexture.loadFromFile("pause.png")) {
-        cout << "Failed to load on pause texture!" << endl;
-        return false;
-    }
-    if (!continueTexture.loadFromFile("continue.png")) {
-        cout << "Failed to load off continue texture!" << endl;
-        return false;
-    }
-
     // Tải nút bật/tắt âm thanh
     if (!onMusicTexture.loadFromFile("onMusic.png")) {
         cout << "Failed to load on music texture!" << endl;
@@ -189,23 +179,26 @@ bool loadMedia()
         return false;
     }
 
-    // Tải âm thanh
+    // Tải nhạc nền
     music = Mix_LoadMUS("music.mp3");
     if(music == nullptr)
     {
         cout << "Failed to load music! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
+    // Tải âm thanh nhấn nút
     clickSound = Mix_LoadWAV("click.wav");
     if (clickSound == nullptr) {
         cout << "Failed to load click sound! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
+    // Tải âm thanh nhấn đúng nút khi chơi game
     beepSound = Mix_LoadWAV("beep.wav");
     if (beepSound == nullptr) {
         cout << "Failed to load beep sound! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
+    // Tải âm thanh nhấn sai nút khi chơi game
     wrongSound = Mix_LoadWAV("wrong.wav");
     if (wrongSound == nullptr) {
         cout << "Failed to load wrong sound! SDL_mixer Error: " << Mix_GetError() << endl;
@@ -253,8 +246,6 @@ void close()
     ranking2Texture.free();
     playerTexture.free();
     highScoreTexture.free();
-    pauseTexture.free();
-    continueTexture.free();
     onMusicTexture.free();
     offMusicTexture.free();
     levelTexture.free();
@@ -295,13 +286,13 @@ void close()
     SDL_Quit();
 }
 
-/** Hàm vẽ menu **/
+/** Hàm vẽ menu lên màn hình **/
 void renderMenu()
 {
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
-    //Vẽ title
+    //Vẽ background có title
     titleTexture.render(0, 0);
 
     // Vẽ nút bật/tắt âm thanh lên màn hình
@@ -312,23 +303,28 @@ void renderMenu()
         onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
     }
 
-    // Vẽ các phím
+    // Vẽ nút chơi
     playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth()/2, WINDOW_HEIGHT/2 - BUTTON_GAP - 3*playTexture.getHeight()/2);
+    // Vẽ nút hướng dẫn
     guideTexture.render(WINDOW_WIDTH/2 - guideTexture.getWidth()/2, WINDOW_HEIGHT/2 - guideTexture.getHeight()/2);
+    // Vẽ nút cài đặt
     settingTexture.render(WINDOW_WIDTH/2 - settingTexture.getWidth()/2, WINDOW_HEIGHT/2 + settingTexture.getHeight()/2 + BUTTON_GAP);
+    // Vẽ nút BXH
     rankingTexture.render(WINDOW_WIDTH/2 - rankingTexture.getWidth()/2, WINDOW_HEIGHT/2 + 3*rankingTexture.getHeight()/2 + 2*BUTTON_GAP);
+    // Vẽ nút thoát
     quitTexture.render(WINDOW_WIDTH/2 - quitTexture.getWidth()/2, WINDOW_HEIGHT/2 + 5*quitTexture.getHeight()/2 + 3*BUTTON_GAP);
 
     //  Cập nhật màn hình
     SDL_RenderPresent(renderer);
 }
 
-/** Hàm vẽ hướng dẫn **/
+/** Hàm vẽ thư mục hướng dẫn lên màn hình **/
 void renderGuide()
 {
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
+    // Vẽ background có hướng dẫn lên màn hình
     guide2Texture.render(0, 0);
 
     // Vẽ nút bật/tắt âm thanh lên màn hình
@@ -350,11 +346,13 @@ void renderGuide()
     SDL_RenderPresent(renderer);
 }
 
+/** Hàm vẽ thư mục cài đặt lên màn hình **/
 void renderSetting()
 {
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
+    // Vẽ background setting
     setting2Texture.render(0, 0);
 
     // Vẽ nút bật/tắt âm thanh lên màn hình
@@ -423,11 +421,13 @@ void renderSetting()
     SDL_RenderPresent(renderer);
 }
 
+/** Hàm vẽ thư mục BXH lên màn hình **/
 void renderRanking()
 {
     // Xóa toàn bộ màn hình
     SDL_RenderClear(renderer);
 
+    // Vẽ background ranking
     ranking2Texture.render(0, 0);
 
     // Vẽ nút bật/tắt âm thanh lên màn hình
@@ -441,11 +441,14 @@ void renderRanking()
     // Vẽ nút home lên màn hình
     homeIconTexture.render(WINDOW_WIDTH - homeIconTexture.getWidth() - 10, homeIconTexture.getHeight() + 20);
 
+    // Vẽ tên và điểm của top 5 players lên màn hình
     for (int i = 0; i < HighScores.size(); i++) {
+        // Vẽ tên
         if (!playerTexture.loadFromRenderedText(HighScores[i].name, TEXT_COLOR, font)) {
             cout << "Failed to load player name texture!" << endl;
             return;
         }
+        // Vẽ điểm
         playerTexture.render(150, 150 + i*60);
         if (!highScoreTexture.loadFromRenderedText(to_string(HighScores[i].score), TEXT_COLOR, font)) {
             cout << "Failed to load highscore texture!" << endl;
@@ -462,7 +465,7 @@ void renderRanking()
     SDL_RenderPresent(renderer);
 }
 
-/** Hàm vẽ các nút lên màn hình **/
+/** Hàm vẽ các ô của trò chơi lên màn hình **/
 void renderButtons()
 {
     // Đặt màu cho bộ vẽ
@@ -473,7 +476,7 @@ void renderButtons()
     }
 }
 
-/** Hàm vẽ các thành phần của trò chơi lên màn hình **/
+/** Hàm vẽ các thành phần của trò chơi (chính) lên màn hình **/
 void renderGame()
 {
     // Xóa màn hình
@@ -492,11 +495,6 @@ void renderGame()
         SDL_RenderFillRect(renderer, &buttons[flashIndex]);
     }
 
-//    if (clicked) {
-//        SDL_SetRenderDrawColor(renderer, CLICKED_COLOR.r, CLICKED_COLOR.g, CLICKED_COLOR.b, CLICKED_COLOR.a);
-//        SDL_RenderFillRect(renderer, &buttons[clickedIndex]);
-//    }
-
     // Vẽ nút bật/tắt âm thanh lên màn hình
     if (isMute) {
         offMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
@@ -507,14 +505,6 @@ void renderGame()
 
     // Vẽ nút home lên màn hình
     homeIconTexture.render(WINDOW_WIDTH - homeIconTexture.getWidth() - 10, homeIconTexture.getHeight() + 20);
-
-    // Vẽ nút tạm ngừng/tiếp tục
-    if (isPause) {
-        continueTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
-    }
-    else {
-        pauseTexture.render(WINDOW_WIDTH - pauseTexture.getWidth() - 10, 2*pauseTexture.getHeight() + 30);
-    }
 
     string levelText = "Level:" + to_string(level);
     // Tải và vẽ level lên màn hình
@@ -544,6 +534,7 @@ void renderGame()
     SDL_RenderPresent(renderer);
 }
 
+/** Hàm vẽ thư mục nhập tên nếu đạt high score **/
 void renderHighScore()
 {
     if (!enterNameTexture.loadFromRenderedText("ENTER YOUR NAME", TEXT_COLOR, font)) {
@@ -560,6 +551,7 @@ void renderHighScore()
     }
 }
 
+/** Hàm vẽ thư mục game over **/
 void renderGameOver()
 {
     // Xóa toàn bộ màn hình
@@ -780,13 +772,6 @@ void handleEvents()
                     // Phát âm thanh click
                     Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
-                }
-
-                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục không
-                if (x >= WINDOW_WIDTH - pauseTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 30 + 2*pauseTexture.getHeight() && y <= 30 + 3*pauseTexture.getHeight()) {
-                    // Phát âm thanh click
-                    Mix_PlayChannel(-1, clickSound, 0);
-                    isPause= !isPause;
                 }
 
                 if (!showSequence) {
