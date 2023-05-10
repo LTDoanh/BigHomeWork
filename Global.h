@@ -48,7 +48,8 @@ extern std::vector<Player> HighScores;
 
 extern TTF_Font* font; // Font chữ
 extern Mix_Music* music; // Nhạc nền của game
-extern Mix_Chunk* beepSound; // Âm thanh khi nhấn nút
-extern Mix_Chunk* wrongSound; // Âm thanh khi nhấn sai nút
+extern Mix_Chunk* clickSound; // Âm thanh khi nhấn nút bất kì trong game
+extern Mix_Chunk* beepSound; // Âm thanh khi nhấn nút khi chơi game
+extern Mix_Chunk* wrongSound; // Âm thanh khi nhấn sai nút khi chơi game
 
 #endif // GLOBAL_H_INCLUDED

@@ -196,6 +196,11 @@ bool loadMedia()
         cout << "Failed to load music! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
+    clickSound = Mix_LoadWAV("click.wav");
+    if (clickSound == nullptr) {
+        cout << "Failed to load click sound! SDL_mixer Error: " << Mix_GetError() << endl;
+        return false;
+    }
     beepSound = Mix_LoadWAV("beep.wav");
     if (beepSound == nullptr) {
         cout << "Failed to load beep sound! SDL_mixer Error: " << Mix_GetError() << endl;
@@ -269,6 +274,8 @@ void close()
     // Giải phóng âm thanh
     Mix_FreeMusic(music);
     music = nullptr;
+    Mix_FreeChunk(clickSound);
+    clickSound = nullptr;
     Mix_FreeChunk(beepSound);
     beepSound = nullptr;
     Mix_FreeChunk(wrongSound);
@@ -615,10 +622,14 @@ void handleEvents()
             // Kiểm tra xem chuột có nhấn vào nút bật/tắt âm thanh không
             if (x >= WINDOW_WIDTH - onMusicTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 10 && y <= 10 + onMusicTexture.getHeight()) {
                 if(isMute) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     Mix_ResumeMusic();
                     Mix_Volume(-1, 64);
                 }
                 else {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     Mix_PauseMusic();
                     Mix_Volume(-1, 0);
                 }
@@ -629,6 +640,8 @@ void handleEvents()
                 int yGuide = WINDOW_HEIGHT/2 - guideTexture.getHeight()/2;
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= xGuide && x <= xGuide + playTexture.getWidth() && y >= yGuide - BUTTON_GAP - playTexture.getHeight() && y <= yGuide - BUTTON_GAP) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
                     startTime = SDL_GetTicks();
                     isReset = true;
@@ -636,27 +649,37 @@ void handleEvents()
                 }
                 // Nếu nhấn nút guide thì hiển thị hướng dẫn
                 else if (x >= xGuide && x <= xGuide + guideTexture.getWidth() && y >= yGuide && y <= yGuide + guideTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = false;
                     isGuide = true;
                 }
                 else if (x >= xGuide && x <= xGuide + settingTexture.getWidth() && y >= yGuide + BUTTON_GAP + settingTexture.getHeight() && y <= yGuide + BUTTON_GAP + 2*settingTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isSetting = true;
                     isMenu = false;
                 }
                 // Nếu nhấn nút ranking thì hiển thị BXH
                 else if (x >= xGuide && x <= xGuide + rankingTexture.getWidth() && y >= yGuide + 2*BUTTON_GAP + 2*quitTexture.getHeight() && y <= yGuide + 2*BUTTON_GAP + 3*quitTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isRanking = true;
                     readHS = true;
                     isMenu = false;
                 }
                 // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
                 else if (x >= xGuide && x <= xGuide + quitTexture.getWidth() && y >= yGuide + 3*BUTTON_GAP + 3*quitTexture.getHeight() && y <= yGuide + 3*BUTTON_GAP + 4*quitTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     running = false;
                 }
             }
             else if (isGuide) {
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= WINDOW_WIDTH/2 - 50 - playTexture.getWidth() && x <= WINDOW_WIDTH/2 - 50 && y >= 520 && y <= 520 + playTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
                     startTime = SDL_GetTicks();
                     isReset = true;
@@ -664,10 +687,14 @@ void handleEvents()
                 }
                 // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
                 else if(x >= WINDOW_WIDTH/2 + 50 && x <= WINDOW_WIDTH/2 + 50 + quitTexture.getWidth() && y >= 520 && y <= 520 + quitTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     running = false;
                 }
                 // Kiểm tra xem chuột có nhấn vào nút home không
                 else if (x >= WINDOW_WIDTH - homeIconTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeIconTexture.getHeight() && y <= 20 + 2*homeIconTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
                     isGuide = false;
                 }
@@ -675,6 +702,8 @@ void handleEvents()
             else if (isSetting) {
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= WINDOW_WIDTH/2 - 50 - playTexture.getWidth() && x <= WINDOW_WIDTH/2 - 50 && y >= 520 && y <= 520 + playTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
                     startTime = SDL_GetTicks();
                     isReset = true;
@@ -682,10 +711,14 @@ void handleEvents()
                 }
                 // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
                 else if(x >= WINDOW_WIDTH/2 + 50 && x <= WINDOW_WIDTH/2 + 50 + quitTexture.getWidth() && y >= 520 && y <= 520 + quitTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     running = false;
                 }
                 // Kiểm tra xem chuột có nhấn vào nút home không
                 else if (x >= WINDOW_WIDTH - homeIconTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeIconTexture.getHeight() && y <= 20 + 2*homeIconTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
                     isSetting = false;
                 }
@@ -693,6 +726,8 @@ void handleEvents()
             else if (isRanking) {
                 // Nếu nhấn nút play thì bắt đầu chạy game
                 if (x >= WINDOW_WIDTH/2 - 50 - playTexture.getWidth() && x <= WINDOW_WIDTH/2 - 50 && y >= 520 && y <= 520 + playTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
                     startTime = SDL_GetTicks();
                     isReset = true;
@@ -700,10 +735,14 @@ void handleEvents()
                 }
                 // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
                 else if(x >= WINDOW_WIDTH/2 + 50 && x <= WINDOW_WIDTH/2 + 50 + quitTexture.getWidth() && y >= 520 && y <= 520 + quitTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     running = false;
                 }
                 // Kiểm tra xem chuột có nhấn vào nút home không
                 else if (x >= WINDOW_WIDTH - homeIconTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeIconTexture.getHeight() && y <= 20 + 2*homeIconTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
                     isRanking = false;
                 }
@@ -722,10 +761,14 @@ void handleEvents()
                     }
                     // Nếu nhấn nút quit thì thoát game
                     else if(x >= xReplay && x <= xReplay + quitTexture.getWidth() && y >= WINDOW_HEIGHT/2 + quitTexture.getHeight() + 100 && y <= WINDOW_HEIGHT/2 + 2*quitTexture.getHeight() + 100) {
+                        // Phát âm thanh click
+                        Mix_PlayChannel(-1, clickSound, 0);
                         running = false;
                     }
                     // Nếu nhấn nút home thì quay về trang chính
                     else if (x >= xReplay && x <= xReplay + replayTexture.getWidth() && y >= WINDOW_HEIGHT/2 - homeTexture.getHeight() && y <= WINDOW_HEIGHT/2) {
+                        // Phát âm thanh click
+                        Mix_PlayChannel(-1, clickSound, 0);
                         isMenu = true;
                         gameOver = false;
                     }
@@ -734,11 +777,15 @@ void handleEvents()
             else {
                 // Kiểm tra xem chuột có nhấn vào nút home không
                 if (x >= WINDOW_WIDTH - homeIconTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeIconTexture.getHeight() && y <= 20 + 2*homeIconTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
                 }
 
-                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục khong
+                // Kiểm tra xem chuột có nhấn vào nút tạm dừng/tiếp tục không
                 if (x >= WINDOW_WIDTH - pauseTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 30 + 2*pauseTexture.getHeight() && y <= 30 + 3*pauseTexture.getHeight()) {
+                    // Phát âm thanh click
+                    Mix_PlayChannel(-1, clickSound, 0);
                     isPause= !isPause;
                 }
 

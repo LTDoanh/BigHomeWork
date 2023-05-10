@@ -72,5 +72,6 @@ LTexture offButtonTexture;
 
 TTF_Font* font = nullptr; // Font chữ
 Mix_Music* music = nullptr; // Nhạc nền của game
+Mix_Chunk* clickSound; // Âm thanh khi nhấn nút bất kì trong game
 Mix_Chunk* beepSound = nullptr; // Âm thanh khi nhấn nút
 Mix_Chunk* wrongSound = nullptr; // Âm thanh khi nhấn sai nút

@@ -2,7 +2,7 @@
 1683305400 source:d:\c++\projectbhw\main.cpp
 	"Game.h"
 
-1683658273 source:d:\c++\projectbhw\game.cpp
+1683686095 source:d:\c++\projectbhw\game.cpp
 	"Game.h"
 
 1683612805 d:\c++\projectbhw\game.h
@@ -12,7 +12,7 @@
 	"Player.h"
 	"HScores.h"
 
-1683655324 d:\c++\projectbhw\global.h
+1683685703 d:\c++\projectbhw\global.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -36,7 +36,7 @@
 	"Global.h"
 	<iostream>
 
-1683657307 source:d:\c++\projectbhw\global.cpp
+1683685703 source:d:\c++\projectbhw\global.cpp
 	"Global.h"
 
 1683196528 source:d:\c++\projectbhw\ltexture.cpp
@@ -65,61 +65,4 @@
 
 1683571262 d:\c++\projectbhw\player.h
 	<iostream>
-
-1683658273 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\game.cpp
-	"Game.h"
-
-1683612805 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\game.h
-	"Global.h"
-	"Constants.h"
-	"LTexture.h"
-	"Player.h"
-	"HScores.h"
-
-1683655324 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.h
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_ttf.h>
-	<SDL_mixer.h>
-	<iostream>
-	<vector>
-	<cstdlib>
-	<ctime>
-	"Constants.h"
-	"LTexture.h"
-	"Player.h"
-	"HScores.h"
-
-1683470427 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\constants.h
-	<SDL.h>
-
-1683554227 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\ltexture.h
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_ttf.h>
-	"Global.h"
-	<iostream>
-
-1683571262 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\player.h
-	<iostream>
-
-1683568952 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\hscores.h
-	<iostream>
-	<fstream>
-	<algorithm>
-	<vector>
-	<string>
-	"Player.h"
-
-1683657307 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.cpp
-	"Global.h"
-
-1683610707 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\hscores.cpp
-	"HScores.h"
-
-1683196528 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\ltexture.cpp
-	"LTexture.h"
-
-1683305400 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\main.cpp
-	"Game.h"
 
