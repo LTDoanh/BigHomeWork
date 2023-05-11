@@ -31,11 +31,6 @@ extern int timeLeft; // Thời gian còn lại
 extern bool running;
 extern bool isMenu;
 extern bool isGuide;
-extern bool isSetting;
-extern bool isEasy;
-extern bool isDefault;
-extern bool isNormal;
-extern bool isHard;
 extern bool isRanking;
 extern bool isReset;
 extern bool isMute;

@@ -19,17 +19,6 @@ extern LTexture onMusicTexture; // ảnh nút bật âm thanh
 extern LTexture offMusicTexture; // ảnh nút tắt âm thanh
 extern LTexture homeTexture; // ảnh nút home
 extern LTexture homeIconTexture; // ảnh nút home (icon)
-extern LTexture settingTexture; // ảnh nút setting
-extern LTexture setting2Texture; // ảnh nền của thư mục setting
-extern LTexture modeTexture; // ảnh chữ "MODE"
-extern LTexture easyModeTexture; // ảnh chữ "easy" mode
-extern LTexture defaultModeTexture; // ảnh chữ "default" mode
-extern LTexture normalModeTexture; // ảnh chữ "normal" mode
-extern LTexture hardModeTexture; // ảnh chữ "hard" mode
-extern LTexture volumeTexture; // ảnh chữ "volume"
-extern LTexture volumeNumberTexture; // ảnh mức độ của âm thanh
-extern LTexture volumeUpTexture; // ảnh nút tăng âm lượng
-extern LTexture volumeDownTexture; // ảnh nút giảm âm lượng
 extern LTexture rankingTexture; // ảnh nút ranking
 extern LTexture ranking2Texture; // ảnh nền của thư mục ranking
 extern LTexture playerTexture;
@@ -59,9 +48,6 @@ void renderMenu();
 
 /** Hàm vẽ thư mục hướng dẫn lên màn hình **/
 void renderGuide();
-
-/** Hàm vẽ thư mục cài đặt lên màn hình **/
-void renderSetting();
 
 /** Hàm vẽ thư mục BXH lên màn hình **/
 void renderRanking();

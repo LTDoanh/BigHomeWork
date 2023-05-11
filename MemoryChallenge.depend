@@ -66,10 +66,10 @@
 1683571262 d:\c++\projectbhw\player.h
 	<iostream>
 
-1683685703 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.cpp
+1683775032 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.cpp
 	"Global.h"
 
-1683685703 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.h
+1683775032 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\global.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -113,10 +113,13 @@
 1683305400 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\main.cpp
 	"Game.h"
 
-1683741730 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\game.h
+1683775032 c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\game.h
 	"Global.h"
 	"Constants.h"
 	"LTexture.h"
 	"Player.h"
 	"HScores.h"
+
+1683741730 source:c:\users\dell\onedrive - vnu.edu.vn\documents\github\bighomework\game.cpp
+	"Game.h"
 

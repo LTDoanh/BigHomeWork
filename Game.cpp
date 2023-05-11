@@ -101,53 +101,6 @@ bool loadMedia()
         return false;
     }
 
-    // Tải nút cài đặt
-    if (!settingTexture.loadFromFile("setting.png")) {
-        cout << "Failed to load setting texture!" << endl;
-        return false;
-    }
-    // Tải giao diện cài đặt
-    if (!setting2Texture.loadFromFile("setting2.png")) {
-        cout << "Failed to load setting background texture!" << endl;
-        return false;
-    }
-
-    // Tải chế độ và các chế độ chơi
-    if (!modeTexture.loadFromRenderedText("MODE:", TEXT_COLOR, font)) {
-        cout << "Failed to load mode texture!" << endl;
-        return false;
-    }
-    if (!easyModeTexture.loadFromRenderedText("Easy", TEXT_COLOR, font)) {
-        cout << "Failed to load easy mode texture!" << endl;
-        return false;
-    }
-    if (!defaultModeTexture.loadFromRenderedText("Default", TEXT_COLOR, font)) {
-        cout << "Failed to load default mode texture!" << endl;
-        return false;
-    }
-    if (!normalModeTexture.loadFromRenderedText("Normal", TEXT_COLOR, font)) {
-        cout << "Failed to load normal mode texture!" << endl;
-        return false;
-    }
-    if (!hardModeTexture.loadFromRenderedText("Hard", TEXT_COLOR, font)) {
-        cout << "Failed to load hard mode texture!" << endl;
-        return false;
-    }
-
-    // Tải âm lượng và nút tăng/giảm âm lượng
-    if (!volumeTexture.loadFromRenderedText("VOLUME:", TEXT_COLOR, font)) {
-        cout << "Failed to load volume texture!" << endl;
-        return false;
-    }
-    if (!volumeUpTexture.loadFromRenderedText("+", TEXT_COLOR, font)) {
-        cout << "Failed to load volume up texture!" << endl;
-        return false;
-    }
-    if (!volumeDownTexture.loadFromRenderedText("-", TEXT_COLOR, font)) {
-        cout << "Failed to load volume down texture!" << endl;
-        return false;
-    }
-
     // Tải nút BXH
     if (!rankingTexture.loadFromFile("ranking.png")) {
         cout << "Failed to load ranking texture!";
@@ -231,17 +184,6 @@ void close()
     quitTexture.free();
     homeTexture.free();
     homeIconTexture.free();
-    settingTexture.free();
-    setting2Texture.free();
-    modeTexture.free();
-    easyModeTexture.free();
-    defaultModeTexture.free();
-    normalModeTexture.free();
-    hardModeTexture.free();
-    volumeTexture.free();
-    volumeNumberTexture.free();
-    volumeUpTexture.free();
-    volumeDownTexture.free();
     rankingTexture.free();
     ranking2Texture.free();
     playerTexture.free();
@@ -304,15 +246,13 @@ void renderMenu()
     }
 
     // Vẽ nút chơi
-    playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth()/2, WINDOW_HEIGHT/2 - BUTTON_GAP - 3*playTexture.getHeight()/2);
+    playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth()/2, WINDOW_HEIGHT/2 - 50 - 3*playTexture.getHeight()/2);
     // Vẽ nút hướng dẫn
     guideTexture.render(WINDOW_WIDTH/2 - guideTexture.getWidth()/2, WINDOW_HEIGHT/2 - guideTexture.getHeight()/2);
-    // Vẽ nút cài đặt
-    settingTexture.render(WINDOW_WIDTH/2 - settingTexture.getWidth()/2, WINDOW_HEIGHT/2 + settingTexture.getHeight()/2 + BUTTON_GAP);
     // Vẽ nút BXH
-    rankingTexture.render(WINDOW_WIDTH/2 - rankingTexture.getWidth()/2, WINDOW_HEIGHT/2 + 3*rankingTexture.getHeight()/2 + 2*BUTTON_GAP);
+    rankingTexture.render(WINDOW_WIDTH/2 - rankingTexture.getWidth()/2, WINDOW_HEIGHT/2 + rankingTexture.getHeight()/2 + 50);
     // Vẽ nút thoát
-    quitTexture.render(WINDOW_WIDTH/2 - quitTexture.getWidth()/2, WINDOW_HEIGHT/2 + 5*quitTexture.getHeight()/2 + 3*BUTTON_GAP);
+    quitTexture.render(WINDOW_WIDTH/2 - quitTexture.getWidth()/2, WINDOW_HEIGHT/2 + 3*quitTexture.getHeight()/2 + 2*50);
 
     //  Cập nhật màn hình
     SDL_RenderPresent(renderer);
@@ -337,81 +277,6 @@ void renderGuide()
 
     // Vẽ nút home lên màn hình
     homeIconTexture.render(WINDOW_WIDTH - homeIconTexture.getWidth() - 10, homeIconTexture.getHeight() + 20);
-
-    // Vẽ nút play và nút quit lên màn hình
-    playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth() - 50, 520);
-    quitTexture.render(WINDOW_WIDTH/2 + 50, 520);
-
-    //  Cập nhật màn hình
-    SDL_RenderPresent(renderer);
-}
-
-/** Hàm vẽ thư mục cài đặt lên màn hình **/
-void renderSetting()
-{
-    // Xóa toàn bộ màn hình
-    SDL_RenderClear(renderer);
-
-    // Vẽ background setting
-    setting2Texture.render(0, 0);
-
-    // Vẽ nút bật/tắt âm thanh lên màn hình
-    if (isMute) {
-        offMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
-    }
-    else {
-        onMusicTexture.render(WINDOW_WIDTH - onMusicTexture.getWidth() - 10, 10);
-    }
-
-    // Vẽ nút home lên màn hình
-    homeIconTexture.render(WINDOW_WIDTH - homeIconTexture.getWidth() - 10, homeIconTexture.getHeight() + 20);
-
-    // Vẽ chế độ chơi game
-    modeTexture.render(150, 200);
-    // Chế độ dễ
-    if (isEasy) {
-        onButtonTexture.render(160 + modeTexture.getWidth(), 200);
-    }
-    else {
-        offButtonTexture.render(170 + modeTexture.getWidth(), 200);
-    }
-    easyModeTexture.render(180 + modeTexture.getWidth() + onButtonTexture.getWidth(), 200);
-    // Chế độ mặc định
-    if (isDefault) {
-        onButtonTexture.render(WINDOW_WIDTH/2 + 70, 200);
-    }
-    else {
-        offButtonTexture.render(WINDOW_WIDTH/2 + 70, 200);
-    }
-    defaultModeTexture.render(WINDOW_WIDTH/2 + 80 + onButtonTexture.getWidth(), 200);
-    // Chế độ trung bình
-    if (isNormal) {
-        onButtonTexture.render(160 + modeTexture.getWidth(), 250);
-    }
-    else {
-        offButtonTexture.render(170 + modeTexture.getWidth(), 250);
-    }
-    normalModeTexture.render(180 + modeTexture.getWidth() + onButtonTexture.getWidth(), 250);
-    // Chế độ khó
-    if (isHard) {
-        onButtonTexture.render(WINDOW_WIDTH/2 + 70, 250);
-    }
-    else {
-        offButtonTexture.render(WINDOW_WIDTH/2 + 70, 250);
-    }
-    hardModeTexture.render(WINDOW_WIDTH/2 + 80 + onButtonTexture.getWidth(), 250);
-
-    // Vẽ âm lượng
-    volumeTexture.render(150, 350);
-    volumeDownTexture.render(WINDOW_WIDTH/2 - 50, 350);
-    int number = 50;
-    string numberText = to_string(number);
-    if (!volumeNumberTexture.loadFromRenderedText(numberText, TEXT_COLOR, font)) {
-        cout << "Failed to load volume number texture!" << endl;
-        return;
-    }
-    volumeNumberTexture.render(WINDOW_WIDTH/2, 350);
-    volumeUpTexture.render(WINDOW_WIDTH/2 + 80, 350);
 
     // Vẽ nút play và nút quit lên màn hình
     playTexture.render(WINDOW_WIDTH/2 - playTexture.getWidth() - 50, 520);
@@ -631,7 +496,7 @@ void handleEvents()
                 int xGuide = WINDOW_WIDTH/2 - guideTexture.getWidth()/2;
                 int yGuide = WINDOW_HEIGHT/2 - guideTexture.getHeight()/2;
                 // Nếu nhấn nút play thì bắt đầu chạy game
-                if (x >= xGuide && x <= xGuide + playTexture.getWidth() && y >= yGuide - BUTTON_GAP - playTexture.getHeight() && y <= yGuide - BUTTON_GAP) {
+                if (x >= xGuide && x <= xGuide + playTexture.getWidth() && y >= yGuide - 50 - playTexture.getHeight() && y <= yGuide - 50) {
                     // Phát âm thanh click
                     Mix_PlayChannel(-1, clickSound, 0);
                     // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
@@ -646,14 +511,8 @@ void handleEvents()
                     isMenu = false;
                     isGuide = true;
                 }
-                else if (x >= xGuide && x <= xGuide + settingTexture.getWidth() && y >= yGuide + BUTTON_GAP + settingTexture.getHeight() && y <= yGuide + BUTTON_GAP + 2*settingTexture.getHeight()) {
-                    // Phát âm thanh click
-                    Mix_PlayChannel(-1, clickSound, 0);
-                    isSetting = true;
-                    isMenu = false;
-                }
                 // Nếu nhấn nút ranking thì hiển thị BXH
-                else if (x >= xGuide && x <= xGuide + rankingTexture.getWidth() && y >= yGuide + 2*BUTTON_GAP + 2*quitTexture.getHeight() && y <= yGuide + 2*BUTTON_GAP + 3*quitTexture.getHeight()) {
+                else if (x >= xGuide && x <= xGuide + rankingTexture.getWidth() && y >= yGuide + 50 + quitTexture.getHeight() && y <= yGuide + 50 + 2*quitTexture.getHeight()) {
                     // Phát âm thanh click
                     Mix_PlayChannel(-1, clickSound, 0);
                     isRanking = true;
@@ -661,7 +520,7 @@ void handleEvents()
                     isMenu = false;
                 }
                 // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
-                else if (x >= xGuide && x <= xGuide + quitTexture.getWidth() && y >= yGuide + 3*BUTTON_GAP + 3*quitTexture.getHeight() && y <= yGuide + 3*BUTTON_GAP + 4*quitTexture.getHeight()) {
+                else if (x >= xGuide && x <= xGuide + quitTexture.getWidth() && y >= yGuide + 2*50 + 2*quitTexture.getHeight() && y <= yGuide + 2*50 + 3*quitTexture.getHeight()) {
                     // Phát âm thanh click
                     Mix_PlayChannel(-1, clickSound, 0);
                     running = false;
@@ -689,30 +548,6 @@ void handleEvents()
                     Mix_PlayChannel(-1, clickSound, 0);
                     isMenu = true;
                     isGuide = false;
-                }
-            }
-            else if (isSetting) {
-                // Nếu nhấn nút play thì bắt đầu chạy game
-                if (x >= WINDOW_WIDTH/2 - 50 - playTexture.getWidth() && x <= WINDOW_WIDTH/2 - 50 && y >= 520 && y <= 520 + playTexture.getHeight()) {
-                    // Phát âm thanh click
-                    Mix_PlayChannel(-1, clickSound, 0);
-                    // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
-                    startTime = SDL_GetTicks();
-                    isReset = true;
-                    isSetting = false;
-                }
-                // Nếu nhấn nút quit thì thoát game mà không hiển thị điểm số
-                else if(x >= WINDOW_WIDTH/2 + 50 && x <= WINDOW_WIDTH/2 + 50 + quitTexture.getWidth() && y >= 520 && y <= 520 + quitTexture.getHeight()) {
-                    // Phát âm thanh click
-                    Mix_PlayChannel(-1, clickSound, 0);
-                    running = false;
-                }
-                // Kiểm tra xem chuột có nhấn vào nút home không
-                else if (x >= WINDOW_WIDTH - homeIconTexture.getWidth() - 10 && x <= WINDOW_WIDTH - 10 && y >= 20 + homeIconTexture.getHeight() && y <= 20 + 2*homeIconTexture.getHeight()) {
-                    // Phát âm thanh click
-                    Mix_PlayChannel(-1, clickSound, 0);
-                    isMenu = true;
-                    isSetting = false;
                 }
             }
             else if (isRanking) {
@@ -912,9 +747,6 @@ void run()
         }
         else if (isGuide) {
             renderGuide();
-        }
-        else if (isSetting) {
-            renderSetting();
         }
         else if (isRanking) {
             if (readHS) {
