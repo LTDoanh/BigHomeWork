@@ -44,115 +44,115 @@ bool init()
 bool loadMedia()
 {
     // Tải font chữ
-    font = TTF_OpenFont("font.ttf", 24);
+    font = TTF_OpenFont("media/font.ttf", 24);
     if (font == nullptr) {
         cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
         return false;
     }
 
     // Tải background
-    if (!backgroundTexture.loadFromFile("background.jpg")) {
+    if (!backgroundTexture.loadFromFile("media/background.jpg")) {
         cout << "Failed to load background texture!" << endl;
         return false;
     }
 
     // Tải background có tên game
-    if (!titleTexture.loadFromFile("title.png")) {
+    if (!titleTexture.loadFromFile("media/title.png")) {
         cout << "Failed to load title texture!" << endl;
         return false;
     }
 
     // Tải nút chơi
-    if (!playTexture.loadFromFile("play.png")) {
+    if (!playTexture.loadFromFile("media/play.png")) {
         cout << "Failed to load play texture!" << endl;
         return false;
     }
 
     // Tải nút hướng dẫn
-    if (!guideTexture.loadFromFile("guide.png")) {
+    if (!guideTexture.loadFromFile("media/guide.png")) {
         cout << "Failed to load guide button texture!" << endl;
         return false;
     }
     // Tải giao diện hướng dẫn
-    if (!guide2Texture.loadFromFile("guide2.png")) {
+    if (!guide2Texture.loadFromFile("media/guide2.png")) {
         cout << "Failed to load guide background texture!" << endl;
         return false;
     }
 
     // Tải nút thoát
-    if (!quitTexture.loadFromFile("quit.png")) {
+    if (!quitTexture.loadFromFile("media/quit.png")) {
         cout << "Failed to load quit texture!" << endl;
         return false;
     }
 
     // Tải nút chơi lại
-    if (!replayTexture.loadFromFile("replay.png")) {
+    if (!replayTexture.loadFromFile("media/replay.png")) {
         cout << "Failed to load replay texture!" << endl;
         return false;
     }
 
     // Tải nút home
-    if (!homeTexture.loadFromFile("home.png")) {
+    if (!homeTexture.loadFromFile("media/home.png")) {
         cout << "Failed to load home texture!" << endl;
         return false;
     }
-    if (!homeIconTexture.loadFromFile("homeIcon.png")) {
+    if (!homeIconTexture.loadFromFile("media/homeIcon.png")) {
         cout << "Failed to load home icon texture!" << endl;
         return false;
     }
 
     // Tải nút BXH
-    if (!rankingTexture.loadFromFile("ranking.png")) {
+    if (!rankingTexture.loadFromFile("media/ranking.png")) {
         cout << "Failed to load ranking texture!";
         return false;
     }
     // Tải giao diện BXH
-    if (!ranking2Texture.loadFromFile("ranking2.png")) {
+    if (!ranking2Texture.loadFromFile("media/ranking2.png")) {
         cout << "Failed to load ranking texture!";
         return false;
     }
 
     // Tải nút bật/tắt âm thanh
-    if (!onMusicTexture.loadFromFile("onMusic.png")) {
+    if (!onMusicTexture.loadFromFile("media/onMusic.png")) {
         cout << "Failed to load on music texture!" << endl;
         return false;
     }
-    if (!offMusicTexture.loadFromFile("offMusic.png")) {
+    if (!offMusicTexture.loadFromFile("media/offMusic.png")) {
         cout << "Failed to load off music texture!" << endl;
         return false;
     }
 
     // Tải nút bật/tắt
-    if (!onButtonTexture.loadFromFile("on.png")) {
+    if (!onButtonTexture.loadFromFile("media/on.png")) {
         cout << "Failed to load on button texture!";
         return false;
     }
-    if (!offButtonTexture.loadFromFile("off.png")) {
+    if (!offButtonTexture.loadFromFile("media/off.png")) {
         cout << "Failed to load off button texture!";
         return false;
     }
 
     // Tải nhạc nền
-    music = Mix_LoadMUS("music.mp3");
+    music = Mix_LoadMUS("media/music.mp3");
     if(music == nullptr)
     {
         cout << "Failed to load music! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
     // Tải âm thanh nhấn nút
-    clickSound = Mix_LoadWAV("click.wav");
+    clickSound = Mix_LoadWAV("media/click.wav");
     if (clickSound == nullptr) {
         cout << "Failed to load click sound! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
     // Tải âm thanh nhấn đúng nút khi chơi game
-    beepSound = Mix_LoadWAV("beep.wav");
+    beepSound = Mix_LoadWAV("media/beep.wav");
     if (beepSound == nullptr) {
         cout << "Failed to load beep sound! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
     }
     // Tải âm thanh nhấn sai nút khi chơi game
-    wrongSound = Mix_LoadWAV("wrong.wav");
+    wrongSound = Mix_LoadWAV("media/wrong.wav");
     if (wrongSound == nullptr) {
         cout << "Failed to load wrong sound! SDL_mixer Error: " << Mix_GetError() << endl;
         return false;
@@ -581,6 +581,8 @@ void handleEvents()
                 if (!isHighScore) {
                     // Nếu nhấn nút replay thì chạy lại game
                     if (x >= xReplay && x <= xReplay + replayTexture.getWidth() && y >= WINDOW_HEIGHT/2 + 50 && y <= WINDOW_HEIGHT/2 + 50 + replayTexture.getHeight()) {
+                        // Phát âm thanh click
+                        Mix_PlayChannel(-1, clickSound, 0);
                         // Đặt thời điểm bắt đầu hiển thị chuỗi là thời gian hiện tại
                         startTime = SDL_GetTicks();
                         isReset = true;
@@ -613,8 +615,6 @@ void handleEvents()
                     // Kiểm tra xem chuột có nhấn vào một nút nào không
                     for (int i = 0; i < BUTTON_NUM; i++) {
                         if (x >= buttons[i].x && x <= buttons[i].x + buttons[i].w && y >= buttons[i].y && y <= buttons[i].y + buttons[i].h) {
-                            //clicked = true;
-                            //clickedIndex = i;
                             // Nếu nút nhấn đúng với nút cần nhấn tiếp theo trong chuỗi
                             if (i == sequence[index]) {
                                 // Phát âm thanh khi nhấn nút

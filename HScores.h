@@ -16,7 +16,7 @@ public:
     bool is_high_score(int newscore, std::vector<Player> highScores);
     void print_player(std::vector<Player> highScores);
 private:
-    string FILENAME = "high_scores.txt";
+    string FILENAME = "media/high_scores.txt";
     fstream file;
     int dem = 0;
 };

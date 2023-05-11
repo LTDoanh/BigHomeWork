@@ -74,15 +74,6 @@ void HScores::write_high_scores(string newname, int newscore, std::vector<Player
     file.close();
 }
 
-// Hàm in ra màn hình các sinh viên trong một vector
-void HScores::print_player(vector<Player> highScores) {
-    // Duyệt qua từng sinh viên trong vector
-    for (Player s : highScores) {
-        // In ra tên và điểm của sinh viên
-        cout << s.name << " " << s.score << endl;
-    }
-}
-
 // Hàm kiểm tra xem điểm của người chơi có nằm trong top không
 bool HScores::is_high_score(int newscore, std::vector<Player> highScores)
 {
